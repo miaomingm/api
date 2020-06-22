@@ -34,7 +34,11 @@ class UserController extends Controller
         if($data['pwds']!=$data['password']){
             return redirect('/user/reg')->with('a','确认密码和密码不一致');
         }
-    array_pop($data);
+        $options =[
+          'cost' =>12,
+        ];
+//    array_pop($data);
+        $data['password']=password_hash($data['password'],PASSWORD_BCRYPT,$options);
         $res = UserModel::insert($data);
         if($res){
             return redirect('/user/login');
