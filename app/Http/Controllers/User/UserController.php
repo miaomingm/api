@@ -34,6 +34,8 @@ class UserController extends Controller
         if($data['pwds']!=$data['password']){
             return redirect('/user/reg')->with('a','确认密码和密码不一致');
         }
+        array_pop($data);
+        $data['reg_time']=time();
         $options =[
           'cost' =>12,
         ];
