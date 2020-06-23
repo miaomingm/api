@@ -25,7 +25,7 @@
             <td>{{$user->user_id}}</td>
             <td>{{$user->user_name}}</td>
             <td>{{$user->email}}</td>
-            <td>{{$user->reg_time}}</td>
+            <td>{{date("Y-m-d H:i:s",$user->trg_time)}}</td>
             <td><a href="{{url('/user/edit/'.$user->user_id)}}" class="btn btn-success">
                     编辑</a> | <a  href="{{url('/user/destroy/'.$user->user_id)}}" class="btn btn-danger">
                     删除</a></td>
