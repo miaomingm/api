@@ -37,4 +37,7 @@ Route::prefix("/user")->middleware("isLogin")->group(function(){
     Route::get('/center','User\LoginController@center');//用户中心
 });
 
+//APi
+Route::post('/api/user/reg','Api\UserController@reg'); //aip注册
+
 
