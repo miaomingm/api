@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserModel extends Model
 {
     public $table = 'users';  //声明model使用的表
-    protected $primarykey ='user_id';  //声明表的主键
+    protected $primaryKey ='user_id';  //声明表的主键
     public $timestamps = false; //时间戳
     protected $guarded = [];//黑名单
 }
