@@ -125,22 +125,9 @@ class UserController extends Controller
 
 
     //个人中心
-    public function center(){
-        //判断用户是否登录，判断是否有id字段
-
-
-        if(isset($_GET['token'])){
-            $token = $_GET['token'];
-        }else{
-            $response = [
-                'error' =>50007,
-                'msg'   =>'请先登录',
-            ];
-            return $response;
-        }
-//        echo $token;die;
-        //检查token是否有效
-        $uid = Redis::get($token);
+    public function center(Request $request){
+       $token = $request->input('token');
+       $uid = Redis::get($token);
         //var_dump($uid);die;
         if($uid){
             $userinfo =UserModel::find($uid);
@@ -162,27 +149,6 @@ class UserController extends Controller
      *我的订单
      */
     public function orders(){
-        //鉴权
-        if(isset($_GET['token'])){
-            $token = $_GET['token'];
-            //验证token是否有效
-            $uid = Redis::get($token);
-            if($uid){
-
-            }else{
-                $response = [
-                    'error' =>50008,
-                    'msg'   =>'请先登录',
-                ];
-                return $response;
-            }
-        }else{
-            $response = [
-                'error' =>50007,
-                'msg'   =>'请先登录',
-            ];
-            return $response;
-        }
         //订单信息
         $arr = [
             'ace8bdaafaedeedbe7f2b5fbb0',
@@ -206,28 +172,6 @@ class UserController extends Controller
      */
     public function cart()
     {
-
-        if(!isset($_GET['token'])){
-            $response = [
-                'error' =>50007,
-                'msg'   =>'请先登录',
-            ];
-            return $response;
-        }
-        //鉴权
-        if (isset($_GET['token'])) {
-            $token = $_GET['token'];
-            //验证token是否有效
-            $uid = Redis::get($token);
-            if ($uid) {
-
-            } else {
-                $response = [
-                    'error' => 50008,
-                    'msg' => '请先登录',
-                ];
-                return $response;
-            }
             $goods = [
                 123,
                 434,
@@ -241,6 +185,5 @@ class UserController extends Controller
             ];
             return $response;
         }
-    }
 }
 

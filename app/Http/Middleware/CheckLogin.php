@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 use Closure;
-
+use Illuminate\Support\Facades\Redis;
 class CheckLogin
 {
     /**
@@ -14,10 +14,18 @@ class CheckLogin
      */
     public function handle($request, Closure $next)
     {
-        //判断用户是否登录
-        $user_id=session('user_id');
-        if(!$user_id){
-            return redirect("user/login")->with("msg","请先登录");
+
+        $token = $request->input('token');
+        //验证token是否有效
+
+        $uid = Redis::get($token);
+        if(!$uid){
+            $resoponse =[
+                'error' =>50009,
+                'msg'   =>'鉴权失败',
+            ];
+            echo json_encode($resoponse,JSON_UNESCAPED_UNICODE);
+            die;
         }
         return $next($request);
     }
