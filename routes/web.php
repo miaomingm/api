@@ -41,4 +41,5 @@ Route::prefix("/user")->middleware("isLogin")->group(function(){
 Route::post('/api/user/reg','Api\UserController@reg'); //aip注册
 Route::post('/api/user/login','Api\UserController@login'); //aip登录
 Route::get('/api/user/center','Api\UserController@center'); //aip个人中心
-
+Route::get('/api/my/orders','Api\UserController@orders'); //我的订单
+Route::get('/api/my/cart','Api\UserController@cart'); //我的订单

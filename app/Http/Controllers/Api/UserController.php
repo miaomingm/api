@@ -107,7 +107,7 @@ class UserController extends Controller
             Redis::expire($token,20);
 
 
-            
+
             $response = [
                 'error' =>0,
                 'msg'=>'ok',
@@ -127,7 +127,17 @@ class UserController extends Controller
     //个人中心
     public function center(){
         //判断用户是否登录，判断是否有id字段
-        $token =$_GET['token'];
+
+
+        if(isset($_GET['token'])){
+            $token = $_GET['token'];
+        }else{
+            $response = [
+                'error' =>50007,
+                'msg'   =>'请先登录',
+            ];
+            return $response;
+        }
 //        echo $token;die;
         //检查token是否有效
         $uid = Redis::get($token);
@@ -139,9 +149,98 @@ class UserController extends Controller
            echo $userinfo->user_name .  "欢迎来到个人中心";
         }else{
             //未登录
-            echo "请登录";
+            $response = [
+                'error' =>50008,
+                'msg'   =>'请先登录',
+            ];
+            return $response;
         }
+    }
 
+
+    /**
+     *我的订单
+     */
+    public function orders(){
+        //鉴权
+        if(isset($_GET['token'])){
+            $token = $_GET['token'];
+            //验证token是否有效
+            $uid = Redis::get($token);
+            if($uid){
+
+            }else{
+                $response = [
+                    'error' =>50008,
+                    'msg'   =>'请先登录',
+                ];
+                return $response;
+            }
+        }else{
+            $response = [
+                'error' =>50007,
+                'msg'   =>'请先登录',
+            ];
+            return $response;
+        }
+        //订单信息
+        $arr = [
+            'ace8bdaafaedeedbe7f2b5fbb0',
+            'bce8bdaafaedeedbe7f2b5fbb0',
+            'cce8bdaafaedeedbe7f2b5fbb0',
+            'dce8bdaafaedeedbe7f2b5fbb0',
+        ];
+
+        $response = [
+            'error' =>0,
+            'msg'   =>'ok',
+            'data'  => [
+                'orders'    =>$arr
+            ]
+        ];
+        return $response;
+    }
+
+    /**
+     *购物车接口
+     */
+    public function cart()
+    {
+
+        if(!isset($_GET['token'])){
+            $response = [
+                'error' =>50007,
+                'msg'   =>'请先登录',
+            ];
+            return $response;
+        }
+        //鉴权
+        if (isset($_GET['token'])) {
+            $token = $_GET['token'];
+            //验证token是否有效
+            $uid = Redis::get($token);
+            if ($uid) {
+
+            } else {
+                $response = [
+                    'error' => 50008,
+                    'msg' => '请先登录',
+                ];
+                return $response;
+            }
+            $goods = [
+                123,
+                434,
+                3434
+            ];
+
+            $response = [
+                'error' => 0,
+                'msg' => 'ok',
+                'data' => $goods
+            ];
+            return $response;
+        }
     }
 }
 
