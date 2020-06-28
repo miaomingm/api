@@ -104,7 +104,7 @@ class UserController extends Controller
             //将token保存到redis
             Redis::set($token,$u->user_id);
             //设置key的过期时间 x 秒
-            Redis::expire($token,20);
+            //Redis::expire($token,20);
 
 
 

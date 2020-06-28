@@ -43,3 +43,12 @@ Route::post('/api/user/login','Api\UserController@login'); //aip登录
 Route::get('/api/user/center','Api\UserController@center')->middleware('isLogin'); //aip个人中心
 Route::get('/api/my/orders','Api\UserController@orders')->middleware('isLogin'); //我的订单
 Route::get('/api/my/cart','Api\UserController@cart')->middleware('isLogin'); //我的购物车
+
+Route::middleware("isLogin","access.filter")->group(function() {
+    Route::get('/api/a', 'Api\TestController@a');
+    Route::get('/api/b', 'Api\TestController@b');
+    Route::get('/api/c', 'Api\TestController@c');
+    Route::get('/api/x', 'Api\TestController@x');
+    Route::get('/api/y', 'Api\TestController@y');
+    Route::get('/api/z', 'Api\TestController@z');
+});
