@@ -21,6 +21,11 @@ Route::get('/info', function () {
 Route::get('/test/hello','TestController@hello');
 Route::get('/test/redis1','TestController@redis1');
 Route::get('/test/test1','TestController@test1');
+Route::get('/test/sign1','TestController@sign1');
+Route::get('/test/secret','TestController@secret');
+Route::get('/test/www','TestController@www');
+
+
 //商品
 Route::get('/goods/detail','Goods\GoodsController@detail');//商品详情
 
