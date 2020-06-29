@@ -18,13 +18,18 @@ Route::get('/info', function () {
     phpinfo();
 
 });
-Route::get('/test/hello','TestController@hello');
-Route::get('/test/redis1','TestController@redis1');
-Route::get('/test/test1','TestController@test1');
-Route::get('/test/sign1','TestController@sign1');
-Route::get('/test/secret','TestController@secret');
-Route::get('/test/www','TestController@www');
 
+//测试
+Route::prefix("/test")->group(function(){
+    Route::get('/hello','TestController@hello');
+    Route::get('/redis1','TestController@redis1');
+    Route::get('/test1','TestController@test1');
+    Route::get('/sign1','TestController@sign1');
+    Route::get('/secret','TestController@secret');
+    Route::get('/www','TestController@www');
+    Route::get('/sendData','TestController@sendData');
+    Route::get('/postData','TestController@postData');
+});
 
 //商品
 Route::get('/goods/detail','Goods\GoodsController@detail');//商品详情

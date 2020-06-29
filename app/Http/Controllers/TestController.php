@@ -66,10 +66,69 @@ class TestController extends Controller
         $data = 'hello';
         $sign = sha1($data.$key);
         $url = $url . '?data='.$data.'&sign=' .$sign;
-        
         //发起网络请求
         $response = file_get_contents($url);
         echo $response;
+    }
+
+    /**
+     * 请求接口
+    */
+    public function sendData(){
+        $url = 'http://api.1910x.com/test/receive';
+        $response = file_get_contents($url);
+
+        echo $response;
+    }
+
+    /**
+    *向接口post数据
+     */
+    public function postData(){
+
+        $key = 'secret';
+        $data = [
+            'user_name' => 'wangkangjie',
+            'user_age'  => 19
+        ];
+
+        $str = json_encode($data).$key;
+        $sign = sha1($str);
+
+        $send_data = [
+            'data'  => json_encode($data),
+            'sign'  => $sign
+        ];
+
+        $url = 'http://api.1910x.com/test/receive-post';
+        //使用 curl post数据
+        // 1 实例化
+        $ch = curl_init();
+
+        // 2 配置参数
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_POST,1);        // 使用post 方式
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$send_data);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);   // 通过变量接收响应
+
+        // 3 开启会话（发送请求）
+        $response = curl_exec($ch);
+
+        // 4 检测错误
+        $errno = curl_errno($ch);       //错误码
+        $errmsg = curl_error($ch);
+
+        if($errno)
+        {
+            echo '错误码： '.$errno;echo '</br>';
+            var_dump($errmsg);
+            die;
+        }
+
+        curl_close($ch);
+
+        echo $response;
+
 
     }
 }
