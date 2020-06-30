@@ -29,6 +29,7 @@ Route::prefix("/test")->group(function(){
     Route::get('/www','TestController@www');
     Route::get('/sendData','TestController@sendData');
     Route::get('/postData','TestController@postData');
+    Route::get('/encrypt1','TestController@encrypt1');
 });
 
 //商品
