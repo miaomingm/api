@@ -177,4 +177,21 @@ class TestController extends Controller
         curl_close($ch);
 
     }
+
+    /**
+    *非对称加密
+     */
+    public function rsaeEncrypt1(){
+        $data = "天王盖地虎";
+
+        //使用公钥加密
+        $key_content = file_get_contents(storage_path('keys/pub.key'));     //读取公钥
+        $pub_key = openssl_get_publickey($key_content);
+        openssl_public_encrypt($data,$enc_data,$pub_key);
+        var_dump($enc_data);
+        echo '<hr>';
+
+        //将加密数据发送到对端
+
+    }
 }
