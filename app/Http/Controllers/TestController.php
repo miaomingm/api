@@ -181,17 +181,29 @@ class TestController extends Controller
     /**
     *非对称加密
      */
-    public function rsaeEncrypt1(){
+    public function sendb(){
         $data = "天王盖地虎";
 
-        //使用公钥加密
-        $key_content = file_get_contents(storage_path('keys/pub.key'));     //读取公钥
-        $pub_key = openssl_get_publickey($key_content);
-        openssl_public_encrypt($data,$enc_data,$pub_key);
-        var_dump($enc_data);
-        echo '<hr>';
+        //公钥加密
+        $key = openssl_get_publickey(file_get_contents(storage_path('keys/b_pub.key')));
+        openssl_public_encrypt($data,$enc_data,$key);
 
+        //base64转码 密文
+        $base64_data = base64_encode($enc_data);
         //将加密数据发送到对端
+        $url = 'http://api.1910x.com/get-a?data=' .urlencode($base64_data);
 
+        //接收响应
+        $response = file_get_contents($url);
+        //echo 'response :' .$response;
+        $json_arr = json_decode($response,true);
+        //echo '<pre>';print_r($json_arr);echo '<pre>';die;
+
+        $enc_data = base64_decode($json_arr['data']);       //密文
+        //解密
+        $key = openssl_get_privatekey(file_get_contents(storage_path('keys/a_priv.key')));
+        openssl_private_decrypt($enc_data,$dec_data,$key);
+
+        echo $dec_data;die;
     }
 }

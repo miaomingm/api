@@ -30,7 +30,7 @@ Route::prefix("/test")->group(function(){
     Route::get('/sendData','TestController@sendData');
     Route::get('/postData','TestController@postData');
     Route::get('/encrypt1','TestController@encrypt1');
-    Route::get('/rsa/encrypt1','TestController@rsaeEncrypt1');
+    Route::get('/rsa/sendb','TestController@sendB');
 });
 
 //商品
