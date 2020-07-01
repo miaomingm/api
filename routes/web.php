@@ -31,6 +31,7 @@ Route::prefix("/test")->group(function(){
     Route::get('/postData','TestController@postData');
     Route::get('/encrypt1','TestController@encrypt1');
     Route::get('/rsa/sendb','TestController@sendB');
+    Route::get('/rsa/ressign1','TestController@ressign1');
 });
 
 //商品

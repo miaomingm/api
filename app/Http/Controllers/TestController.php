@@ -195,7 +195,7 @@ class TestController extends Controller
 
         //接收响应
         $response = file_get_contents($url);
-        //echo 'response :' .$response;
+        //echo 'response :' .$response;die;
         $json_arr = json_decode($response,true);
         //echo '<pre>';print_r($json_arr);echo '<pre>';die;
 
@@ -205,5 +205,22 @@ class TestController extends Controller
         openssl_private_decrypt($enc_data,$dec_data,$key);
 
         echo $dec_data;die;
+    }
+
+
+    public function ressign1(){
+        $data = "hello word";
+
+        //使用私钥签名
+        $key = openssl_get_privatekey(file_get_contents(storage_path('keys/a_priv.key')));
+        openssl_sign($data,$sign,$key);
+
+        $data = urlencode($data);   //url参数处理
+        $sign = urlencode(base64_encode($sign));
+
+        $url = 'http://api.1910x.com/rsa/verify1?data=' .$data.'&sign='.$sign;
+        $response = file_get_contents($url);
+        echo $response;
+
     }
 }
